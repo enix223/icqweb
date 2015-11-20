@@ -1,0 +1,44 @@
+{% load staticfiles %}
+{% load my_tags %}
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>{% settings_value 'SSWEB_SLOGAN' %} - {% settings_value 'SSWEB_TITLE' %}</title>
+        <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">
+        <link rel="apple-touch-icon-precomposed" href="images/apple-touch-icon.png">
+        <!--link id="data-uikit-theme" rel="stylesheet" href="/css/uikit.docs.min.css"-->
+        <link rel="stylesheet" href="{% static 'uikit-2.23.0/css/uikit.min.css' %}">
+        <link rel="stylesheet" href="{% static 'uikit-2.23.0/css/uikit.gradient.min.css' %}">
+        {% block customCss %}{% endblock %}
+    </head>
+
+    <body>
+        <!-- Navbar -->
+        <div class="uk-grid">
+            <div class="uk-width-medium-3-5 uk-container-center uk-margin-top">
+                {% block navbar %}{% endblock %}
+            </div>
+        </div>
+
+        <!-- Main -->
+        <div class="uk-grid uk-margin-top">
+            <div class="uk-width-medium-3-5 uk-container-center">
+                {% block content %}{% endblock %}
+            </div>
+        </div>
+
+        <!-- Footer -->
+        {% block footer %}{% endblock %}
+
+        <!-- Scripts -->
+        <script src="{% static 'jquery/2.1.4/jquery.min.js' %}"></script>
+        <script src="{% static 'uikit-2.23.0/js/uikit.min.js' %}"></script>
+
+        <!-- Custom JS -->
+        {% block customJs %}{% endblock %}
+    </body>
+
+</html>

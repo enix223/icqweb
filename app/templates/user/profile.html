@@ -1,0 +1,100 @@
+{% extends 'user/user_base.html' %}
+{% load my_tags %}
+
+{% block leftbar %}
+    {% include 'include/leftbar.html' with tab='profile' %} <!-- Left bar, specify active tab -->
+{% endblock %}
+
+{% block custom %}
+{% if messages %}
+<div class="uk-grid">
+    {% for message in messages %}
+    <div class="uk-width-1-1">
+        <div class="uk-alert {% if message.tags == 'error' %}uk-alert-danger{% else %}uk-alert-success{% endif %}" data-uk-alert>
+            <a href="" class="uk-alert-close uk-close"></a>
+            <p>{{ message }}</p>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endif %}
+
+<div class="uk-grid uk-margin-bottom">
+    <div class="uk-width-medium-1-1">
+        <!-- Change package -->
+        <div class="uk-panel uk-panel-divider">
+            <h3 class="uk-panel-titl"><i class="uk-icon-trophy"></i> Current Package</h3>
+            <!-- Body -->
+            <div>
+                <span>Your current package is: <span>
+                <div class="uk-badge uk-badge-success"><i class="{{user.userpackagerel.package.icon}}"></i> {{user.userpackagerel.package.package_name}}</div>
+            </div>
+            <div class="uk-margin-top">
+                <a href="{% url 'pricing' %}" class="uk-button uk-button-primary"><i class="uk-icon-upload"></i> Upgrade and power up</a>
+            </div>
+        </div>
+
+        <!-- Change SS password -->
+        <div class="uk-panel uk-panel-divider">
+            <h3 class="uk-panel-titl"><i class="uk-icon-paper-plane-o"></i> &nbsp;Change VPN password</h3>
+            <!-- Body -->
+            <form class="uk-form uk-form-horizontal" action="{% url 'user-sspwd-change' user.userprofile.pk %}" method="POST">
+                {% csrf_token %}
+                <div class="uk-form-row">
+                    <label class="uk-form-label">Current VPN Password</label>
+                    <input type="text" name="password" disabled value="{{ user.userprofile.passwd }}">
+                </div>
+
+                <div class="uk-form-row">
+                    <label class="uk-form-label">New VPN Password</label>
+                    <input type="text" name="passwd">
+                    {% if vpn_form.errors.passwd %}
+                    <p class="uk-text-danger">{{vpn_form.errors.passwd|striptags}}</p>
+                    {% endif %}
+                </div>
+                {% if vpn_form.non_fields_errors %}
+                <div class="uk-form-row uk-text-danger">
+                    {{vpn_form.non_fields_errors|striptags}}
+                </div>
+                {% endif %}
+                <div class="uk-form-row">
+                    <button class="uk-button uk-button-danger" type="submit">Update VPN Password</button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Change password -->
+        <div class="uk-panel uk-panel-divider">
+            <h3 class="uk-panel-titl"><i class="uk-icon-key"></i> &nbsp;Change {% settings_value 'SSWEB_TITLE' %} password</h3>
+            <!-- Body -->
+            <form class="uk-form uk-form-horizontal" action="{% url 'password_change' %}" method="POST">
+                {% csrf_token %}
+                <div class="uk-form-row">
+                    <label class="uk-form-label">Current Password</label>
+                    <input type="password" name="old_password">
+                    {% if form.errors.old_password %}
+                    <p class="uk-text-danger">{{form.errors.old_password|striptags}}</p>
+                    {% endif %}
+                </div>
+                <div class="uk-form-row">
+                    <label class="uk-form-label">New Password</label>
+                    <input type="password" name="new_password1">
+                    {% if form.errors.new_password1 %}
+                    <p class="uk-text-danger">{{form.errors.new_password1|striptags}}</p>
+                    {% endif %}
+                </div>
+                <div class="uk-form-row">
+                    <label class="uk-form-label">Confirm Password</label>
+                    <input type="password" name="new_password2">
+                    {% if form.errors.new_password2 %}
+                    <p class="uk-text-danger">{{form.errors.new_password2|striptags}}</p>
+                    {% endif %}
+                </div>
+                <div class="uk-form-row">
+                    <button class="uk-button uk-button-success" type="submit">Update Password</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

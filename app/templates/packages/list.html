@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block customCss %}
+<link rel="stylesheet" href="{% static 'uikit-2.23.0/css/components/dotnav.min.css' %}">
+<link rel="stylesheet" href="{% static 'uikit-2.23.0/css/components/dotnav.gradient.min.css' %}">
+<link rel="stylesheet" href="{% static 'uikit-2.23.0/css/components/slidenav.min.css' %}">
+<link rel="stylesheet" href="{% static 'uikit-2.23.0/css/components/slidenav.gradient.min.css' %}">
+<link rel="stylesheet" href="{% static 'uikit-2.23.0/css/components/slideshow.min.css' %}">
+<link rel="stylesheet" href="{% static 'uikit-2.23.0/css/components/slideshow.gradient.min.css' %}">
+{% endblock %}
+
+<!-- Navbar -->
+{% block navbar %}
+    {% include 'include/navbar.html' with tab='pricing' %}
+{% endblock %}
+
+
+{% block content %}
+<div class="uk-slidenav-position" data-uk-slideshow>
+    <ul class="uk-slideshow  uk-overlay-active" data-uk-slideshow="{autoplay:false}">
+        {% for package in packages_list %}
+        <li>
+            <img src="{{ package.package_ad_img.url }}" width="800" height="400" alt="">
+            <div class="uk-overlay-panel uk-overlay-background uk-overlay-fade uk-flex uk-flex-center uk-flex-middle uk-text-center">
+                <div>
+                    <h1>{{ package.package_name }}</h1>
+                    <p>{{ package.package_desc }}</p>
+                    <p>{% if package.flow_limit == -1 %}No Limit {% else %}{{ package.flow_limit }} MB {% endif %}</p>
+                    <p>
+                        <h1 class="uk-text-danger">{{ package.package_price }} RMB</h1>
+                        <span>{{ package.time_limit }} {{ package.get_time_unit_display }}</span>
+                    </p>
+                    <a href="{% url 'user-upgrade' %}?package={{package.id}}" class="uk-button uk-button-success">Try it now</a>
+                </div>
+            </div>
+        </li>
+        {% endfor %}
+    </ul>
+    <a href="" class="uk-slidenav uk-slidenav-contrast uk-slidenav-previous" data-uk-slideshow-item="previous"></a>
+    <a href="" class="uk-slidenav uk-slidenav-contrast uk-slidenav-next" data-uk-slideshow-item="next"></a>
+    <ul class="uk-dotnav uk-dotnav-contrast uk-position-bottom uk-flex-center">
+        {% for package in packages_list %}
+        <li data-uk-slideshow-item="{{forloop.counter0}}"><a href="#">Item{{forloop.counter0}}</a></li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}
+
+
+{% block customJs %}
+<script src="{% static 'uikit-2.23.0/js/components/slideshow.min.js' %}"></script>
+{% endblock %}

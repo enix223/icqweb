@@ -1,0 +1,39 @@
+﻿{% extends 'registration/auth_base.html' %}
+
+<!-- Content -->
+{% block content %}
+<div class="uk-panel uk-panel-box uk-width-medium-1-2">
+    <div class="uk-panel-title">
+        <h3>
+            Login
+        </h3>
+    </div>
+    <form class="uk-form uk-form-stacked" action="#" method="POST">
+        {% csrf_token %}
+        <div class="uk-form-row">
+            <label class="uk-form-label" style="font-weight: normal">Username</label>
+            <input type="email" name="username" placeholder="Email"
+                class="uk-form-success uk-width-1-1" value="{{form.username.value|default_if_none:'' }}" >
+            <div class="uk-text-danger">{{ form.username.errors|striptags }}</div>
+        </div>
+        <div class="uk-form-row">
+            <label class="uk-form-label" style="font-weight: normal">
+                Password
+                (<a href="{% url 'password_reset' %}" style="font-weight: normal">Forget passowrd?</a>)
+            </label>
+            <input type="password" name="password" placeholder="Password" class="uk-form-success uk-width-1-1">
+            <div class="uk-text-danger">{{ form.password.errors|striptags }}</div>
+        </div>
+        <div class="uk-form-row uk-clearfix">
+            <button type="submit" class="uk-button uk-button-success uk-float-left">Login</button>
+            <a href="{% url 'user-signon' %}" class="uk-button uk-float-right">Signon</a>
+        </div>
+        <!-- Message -->
+        <div class="uk-form-row uk-text-danger">
+            {{ form.non_field_errors|striptags  }}
+        </div>
+    </form>
+</div>
+{% endblock %}
+
+

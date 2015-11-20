@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+<!-- Navbar -->
+{% block navbar %}
+    {% include 'include/navbar.html' with tab='started' %}
+{% endblock %}
+
+<!-- Content -->
+{% block content %}
+<div class="uk-panel uk-panel-box"> <!-- Panel -->
+    <div class="uk-grid">
+        <div class="uk-width-medium-1-5"><!-- Left navbar -->
+            {% block leftbar %}{% endblock %}
+        </div>
+        <div class="uk-width-medium-4-5">
+            {% block custom %}{% endblock %}
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+

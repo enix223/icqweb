@@ -1,0 +1,29 @@
+{% extends 'user/user_base.html' %}
+
+{% block leftbar %}
+    {% include 'include/leftbar.html' with tab='console' %} <!-- Left bar, specify active tab -->
+{% endblock %}
+
+{% block custom %}
+<div class="ss-welcome uk-margin-bottom">
+    Hi {{ user.last_name }}, Welcome back.
+</div>
+
+<div class="uk-grid">
+    <div class="uk-width-medium-1-2">
+        <!-- Total usage -->
+        <div class="uk-panel uk-panel-box">
+            <h3 class="uk-panel-title">Total Usage</h3>
+            <!-- Body -->
+        </div>
+    </div>
+
+    <div class="uk-width-medium-1-2">
+        <!-- Total usage -->
+        <div class="uk-panel uk-panel-box">
+            <h3 class="uk-panel-title">Total Usage</h3>
+            <!-- Body -->
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,72 @@
+# Package
+- model: app.Package
+  pk: 1
+  fields:
+    package_name: Trial Package (A)
+    package_desc: Trial Package, 512M Limit, 1 day for trail.
+    flow_limit: 512
+    time_limit: 1
+    time_unit: D
+    icon: uk-icon-battery-1
+    package_ad_img: placeholder_800x400_1.jpg
+    package_price: 0
+- model: app.Package
+  pk: 2
+  fields:
+    package_name: Silver Package (B)
+    package_desc: Silver Package, 40GB per month
+    flow_limit: 40960
+    time_limit: 1
+    time_unit: M
+    icon: uk-icon-battery-2
+    package_ad_img: placeholder_800x400_2.jpg
+    package_price: 10
+- model: app.Package
+  pk: 3
+  fields:
+    package_name: Golden Package (C)
+    package_desc: Golden Package, 80GB per month
+    flow_limit: 81920
+    time_limit: 1
+    time_unit: M
+    icon: uk-icon-battery-3
+    package_ad_img: placeholder_800x400_3.jpg
+    package_price: 15
+- model: app.Package
+  pk: 4
+  fields:
+    package_name: Platinum Package (D)
+    package_desc: Platinum Package, no limit, and charge per month
+    flow_limit: -1
+    time_limit: 1
+    time_unit: M
+    icon: uk-icon-battery-4
+    package_ad_img: placeholder_800x400_1.jpg
+    package_price: 20
+- model: app.Package
+  pk: 5
+  fields:
+    package_name: Golden Platinum Package (E)
+    package_desc: Golden Platinum Package, no limit, and charge per year
+    flow_limit: -1
+    time_limit: 1
+    time_unit: Y
+    icon: uk-icon-battery-4
+    package_ad_img: placeholder_800x400_3.jpg
+    package_price: 190
+- model: app.Order
+  pk: 2015100101
+  fields:
+    user: 1
+    package: 1
+    order_status: 0
+    created: 2011-09-01T13:20:30+08:00
+    updated: 2011-09-01T13:20:30+08:00
+
+
+
+
+
+
+
+

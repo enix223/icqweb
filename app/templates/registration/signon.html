@@ -1,0 +1,110 @@
+﻿{% extends 'registration/auth_base.html' %}
+
+<!-- Content -->
+{% block content %}
+<!-- Alert -->
+{% if messages %}
+<div class="uk-grid">
+    {% for message in messages %}
+    <div class="uk-width-1-1  uk-margin-bottom">
+        <div class="uk-alert {% if message.tags == 'error' %}uk-alert-danger{% else %}uk-alert-success{% endif %}" data-uk-alert>
+            <a href="" class="uk-alert-close uk-close"></a>
+            <p>
+                {{ message }} <a href="{% url 'login' %}">Singin</a> and start surfing.
+            </p>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endif %}
+
+<!-- Alert Template -->
+<script type="text/html" id="ss-alert-template">
+
+</script>
+
+<!-- Form panel -->
+<div class="uk-panel uk-panel-box uk-width-medium-1-2">
+    <div class="uk-panel-title">
+        <h3>Signon</h3>
+    </div>
+    <form id="ss-form" class="uk-form" action="{% url 'user-signon' %}" method="POST">
+        {% csrf_token %}
+        <div class="uk-form-row">
+            <div class="uk-form-icon" style="width: 100%">
+                <i class="uk-icon-user"></i>
+                <input type="email" name="username" placeholder="Email"
+                    class="uk-form-success uk-width-1-1 ss-form-username" value="{{form.username.value|default_if_none:'' }}" >
+            </div>
+            <div class="uk-text-danger">{{ form.username.errors|striptags }}</div>
+        </div>
+        <div class="uk-form-row">
+            <div class="uk-form-icon" style="width: 100%">
+                <i class="uk-icon-child"></i>
+                <input type="text" name="last_name" placeholder="Nick Name"
+                    class="uk-form-success uk-width-1-1 ss-form-last_name" value="{{form.last_name.value|default_if_none:'' }}" >
+            </div>
+            <div class="uk-text-danger">{{ form.last_name.errors|striptags }}</div>
+        </div>
+        <div class="uk-form-row">
+            <div class="uk-form-icon"  style="width: 100%">
+                <i class="uk-icon-key"></i>
+                <input type="password" name="password1" placeholder="Password" class="uk-form-success uk-width-1-1 ss-form-password1">
+            </div>
+            <div class="uk-text-danger">{{ form.password1.errors|striptags }}</div>
+        </div>
+        <div class="uk-form-row">
+            <div class="uk-form-icon"  style="width: 100%">
+                <i class="uk-icon-key"></i>
+                <input type="password" name="password2" placeholder="Confirm Password" class="uk-form-success uk-width-1-1 ss-form-password2">
+            </div>
+            <div class="uk-text-danger">{{ form.password2.errors|striptags }}</div>
+        </div>
+        <div class="uk-form-row">
+            <div class="uk-form-icon"  style="width: 100%">
+                <i class="uk-icon-key"></i>
+                <input type="text" name="promo_code" placeholder="Promo code" class="uk-form-success uk-width-1-1 ss-form-promocode">
+            </div>
+            <div class="uk-text-danger">{{ form.promo_code.errors|striptags }}</div>
+        </div>
+        <div class="uk-form-row uk-clearfix">
+            <button id="" type="submit" class="uk-button uk-button-success uk-float-left">Create</button>
+        </div>
+        <!-- Message -->
+        <div class="uk-form-row uk-text-danger">
+            {{ form.non_field_errors |striptags  }}
+        </div>
+    </form>
+</div>
+{% endblock %}
+
+{% block customJs %}
+<script>
+    $(function(){
+        $('#submit').click(function(){
+            $.ajax({
+                url: $('#ss-form').attr('action'),
+                dataType: 'json',
+                type: 'POST',
+                data: {
+                    'username': $('input[name=username]').val(),
+                    'password1': $('input[name=password1]').val(),
+                    'password2': $('input[name=password2]').val(),
+                    'promo_code': $('input[name=promo_code]').val(),
+                },
+                success: function(json){
+                    if(json.success == '0'){
+                        $('#ss-alert-template p').html('Congratulations. Account created successfully.');
+                        $('#ss-alert').html($('#ss-alert-template').html());
+                    } else {
+                        $('#ss-alert-template p').html('Oops! Account created failed.');
+                        $('#ss-alert').html($('#ss-alert-template').html());
+                    }
+                }
+            });
+        });
+    });
+</script>
+{% endblock %}
+
+

@@ -1,0 +1,5 @@
+<ul class="uk-tab uk-tab-left">
+    <li {% if tab == 'console' %}class="uk-active"{% endif %}><a href="{% url 'user-console' %}"><i class="uk-icon-desktop "></i> &nbsp;Console</a></li>
+    <li {% if tab == 'profile' %}class="uk-active"{% endif %}><a href="{% url 'user-profile' %}"><i class="uk-icon-space-shuttle"></i> &nbsp;My profile</a></li>
+    <li {% if tab == 'nodes' %}class="uk-active"{% endif %}><a href="{% url 'user-nodes' %}"><i class="uk-icon-rocket"></i> &nbsp;Nodes</a></li>
+</ul>
